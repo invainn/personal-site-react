@@ -1,5 +1,7 @@
+import { Fragment } from 'react';
+
 export default ({ children }) => (
-    <div>
+    <Fragment>
         {children}
         <style jsx>{`
             div {
@@ -9,5 +11,5 @@ export default ({ children }) => (
                 align-items: center;
             }
         `}</style>
-    </div>
+    </Fragment>
 );

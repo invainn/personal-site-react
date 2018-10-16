@@ -1,12 +1,13 @@
+import { Fragment } from 'react';
 import Shell from '../components/Shell';
 import Intro from '../components/Intro';
 
 const Index = () => (
-    <div>
+    <Fragment>
         <Shell>
             <Intro />
         </Shell>
-    </div>    
+    </Fragment>
 );
 
 export default Index;
