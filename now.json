@@ -1,0 +1,12 @@
+{
+	"name": "personal",
+	"alias": "antbnt.me",
+    "version": 2,
+    "alias": "antbnt.me",
+    "builds": [
+        { "src": "frontend/next.config.js", "use": "@now/next" }
+    ],
+    "routes": [
+        { "src": "/(.*)", "methods": ["GET"] ,"dest": "/frontend/$1" }
+    ]
+}
