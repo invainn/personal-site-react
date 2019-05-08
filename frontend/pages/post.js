@@ -1,5 +1,6 @@
 import moment from 'moment';
 import Link from 'next/link';
+import { withRouter } from 'next/router';
 import { Fragment, PureComponent } from 'react';
 import Shell from '../components/Shell';
 import ReactMarkdown from 'react-markdown';
@@ -82,7 +83,7 @@ const Post = ({ post: { title, createdAt, content } }) => (
 
 Post.getInitialProps = async ({ query }) => {
     const { id } = query;
-    const res = await fetch((process.env.SITE_URL) ? `${process.env.SITE_URL}/posts/${id}` : `http://localhost:1337/posts/${id}`);
+    const res = await fetch(`${process.env.SITE_URL}/posts/${id}`);
     const post = await res.json();
 
     return {
@@ -90,5 +91,5 @@ Post.getInitialProps = async ({ query }) => {
     }
 }
     
-export default Post;
+export default withRouter(Post);
 

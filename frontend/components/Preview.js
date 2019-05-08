@@ -6,7 +6,7 @@ import moment from 'moment';
 export default ({ title, subtitle, content, createdAt, id }) => (
     <Fragment>
         <div className="preview-container">
-            <Link as={`/post/${id}`} href={`/post?id=${id}`}>
+            <Link prefetch as={`/post/${id}`} href={`/post?id=${id}`}>
                 <a className="post-link">{ title }</a>
             </Link>
             <div className="preview-date" style={{ 'marginTop': '5px' }}>{moment(createdAt).format('MMMM Do, YYYY')}</div>

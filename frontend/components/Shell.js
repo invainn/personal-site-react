@@ -4,15 +4,17 @@ const Shell = ({ children }) => (
     <main>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <nav>
-            <span>Anthony Bennett</span>
             <Link href="/"> 
-                <a>Home</a>
+                <span>antbnt</span>
+            </Link>
+            <Link href="/projects">
+                <a>projects</a>
             </Link>
             <Link href="/posts">
-                <a>Posts</a>
+                <a>posts</a>
             </Link>
             <Link href="/contact">
-                <a>Contact</a>
+                <a>contact</a>
             </Link>
         </nav>
         <div>
@@ -32,6 +34,12 @@ const Shell = ({ children }) => (
                 border: 3px solid #192E43;
             }
 
+            span:hover {
+                cursor: pointer;
+                color: #999999;
+                border-radius: 2px;
+            }
+
             nav {
                 text-align: left;    
                 position: fixed;
@@ -49,14 +57,13 @@ const Shell = ({ children }) => (
             }
 
             div {
-                padding: 50px 20px 0 20px;
+                padding: 60px 20px 0 20px;
 
                 display: flex;
 
-                align-items: center;
                 justify-content: center;
 
-                height: 80vh;
+                height:80vh;
             }
         `}</style>
         <style jsx global>{`
@@ -76,7 +83,7 @@ const Shell = ({ children }) => (
 
             a:hover {
                 background-color: white;
-                color: black;
+                color: #000000;
                 border-radius: 4px;
                 border: 3px solid white;
             }

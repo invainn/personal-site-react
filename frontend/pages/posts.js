@@ -5,7 +5,7 @@ import Preview from '../components/Preview';
 
 export default class extends Component {
     static async getInitialProps() {
-        const res = await fetch((process.env.SITE_URL) ? `${process.env.SITE_URL}/posts` : 'http://localhost:1337/posts');
+        const res = await fetch(`${process.env.SITE_URL}/posts`);
         const posts = await res.json();
 
         return {
@@ -18,7 +18,7 @@ export default class extends Component {
 
         return (
             <Shell>
-                <div>
+                <div style={{ 'align-self': 'center' }}>
                     { posts.map(({ title, subtitle, content, createdAt, id }) => ( 
                         <Preview
                             title={title}

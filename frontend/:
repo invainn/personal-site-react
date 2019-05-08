@@ -1,0 +1,76 @@
+import React, { Component } from 'react';
+import Shell from '../components/Shell';
+import fetch from 'isomorphic-unfetch';
+import Link from 'next/link';
+import Preview from '../components/Preview';
+
+export default class extends Component {
+    static async getInitialProps() {
+        const res = await fetch(`${process.env.SITE_URL}/projects`);
+        const projects = await res.json();
+        console.log(projects);
+
+        return {
+            projects,
+        }
+    }
+
+    render() {
+        const { projects } = this.props;
+
+        return (
+            <>
+                <Shell>
+                    <div className="projects-container">
+                        {projects.map(({ id, name, subtitle }) => (
+                                <Link prefetch as={`/project/${id}`} href={`/project?id=${id}`}>
+                                    <div className="projects-item" key={id}>
+                                        <a className="projects-link">{ name }</a>
+                                        <div><p>{ subtitle }</p></div>
+                                    </div>
+                                </Link>
+                        ))}
+                    </div>
+                </Shell>
+                <style jsx>{`
+
+                    @media only screen and (min-width: 696px) {
+                        .projects-container {
+                            display: flex;
+                            flex-flow: row wrap;
+                            align-content: center;
+                            align-items:center;
+                        }
+                    }
+
+                    @media only screen and (max-width: 695px) {
+                        .projects-container {
+                            display: flex;
+                            flex-flow: row wrap;
+                            align-items:center;
+                            justify-content: center;
+                        }
+                    }
+
+                    .projects-item {
+                        border-style: solid;
+                        border-width: 2.5px;
+                        border-color: #FFFFFF;
+                        width: auto;
+                        max-width: 200px;
+                        height: auto;
+                        padding: 20px;
+                        margin: 10px;
+                        border-radius: 15px;
+                    }
+
+                    .post-link {
+                        font-weight: bold;
+                        font-size: 22px;
+                        border: none;
+                    }
+                `}</style>
+            </>
+        );
+    }
+}
