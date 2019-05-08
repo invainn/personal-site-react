@@ -11,8 +11,6 @@ export default class extends Component {
             'content_type': 'project',
         });
 
-        console.log(items);
-
         return {
             projects: items.map(({ fields, sys }) =>  {
                 const { name, description, image: { fields: { file: { url } } }, githubLink } = fields;
