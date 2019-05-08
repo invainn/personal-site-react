@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
 import Shell from '../components/Shell';
-import fetch from 'isomorphic-unfetch';
 import Link from 'next/link';
+import client from '../common/client';
 import ReactMarkdown from 'react-markdown';
 import Preview from '../components/Preview';
 
 export default class extends Component {
     static async getInitialProps() {
-        const res = await fetch(`${process.env.SITE_URL}/projects`);
-        const projects = await res.json();
-        console.log(projects);
+        const { items } = await client.getEntries({
+            'content_type': 'project',
+        });
+
+        console.log(items);
 
         return {
-            projects,
+            projects: items.map(({ fields, sys }) =>  {
+                const { name, description, image: { fields: { file: { url } } }, githubLink } = fields;
+                const { id } = sys;
+
+                return {
+                    id,
+                    name,
+                    description,
+                    imageUrl: url,
+                    githubLink,
+                };
+            }),
         }
     }
 
@@ -22,11 +35,11 @@ export default class extends Component {
         return (
             <Shell>
                 <div className="projects-container">
-                    {projects.map(({ id, name, description, image, githubLink }) => (
+                    {projects.map(({ id, name, description, imageUrl, githubLink }) => (
                         <>
                             <div className="project-container">
                                 <div>
-                                    <img src={`${process.env.SITE_URL}${image.url}`} className="project-image" />
+                                    <img src={`${imageUrl}`} className="project-image" />
                                 </div>
                                 <div style={{ 'max-width': '450px' }}>
                                     <p className="project-name">{ name }</p>

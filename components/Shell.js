@@ -7,11 +7,11 @@ const Shell = ({ children }) => (
             <Link href="/"> 
                 <span>antbnt</span>
             </Link>
-            <Link href="/projects">
-                <a>projects</a>
-            </Link>
             <Link href="/posts">
                 <a>posts</a>
+            </Link>
+            <Link href="/projects">
+                <a>projects</a>
             </Link>
             <Link href="/contact">
                 <a>contact</a>

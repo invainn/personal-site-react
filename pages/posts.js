@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
 import Shell from '../components/Shell';
-import fetch from 'isomorphic-unfetch';
+import client from '../common/client';
 import Preview from '../components/Preview';
 
 export default class extends Component {
     static async getInitialProps() {
-        const res = await fetch(`${process.env.SITE_URL}/posts`);
-        const posts = await res.json();
+        const { items } = await client.getEntries({
+            'content_type': 'post',
+        });
 
         return {
-            posts,
-        }
+            posts: items.map(({ fields, sys }) => {
+                const { title, subtitle, content } = fields;
+                const { id, createdAt } = sys;
+
+                return {
+                    title,
+                    subtitle,
+                    content,
+                    id,
+                    createdAt,
+                };
+            }),
+        };
     }
 
     render() {
@@ -19,7 +31,7 @@ export default class extends Component {
         return (
             <Shell>
                 <div style={{ 'align-self': 'center' }}>
-                    { posts.map(({ title, subtitle, content, createdAt, id }) => ( 
+                    { posts.map(({ title, subtitle, content, id, createdAt }) => ( 
                         <Preview
                             title={title}
                             content={content}

@@ -4,7 +4,7 @@ import { withRouter } from 'next/router';
 import { Fragment, PureComponent } from 'react';
 import Shell from '../components/Shell';
 import ReactMarkdown from 'react-markdown';
-import fetch from 'isomorphic-unfetch';
+import client from '../common/client';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { okaidia } from "react-syntax-highlighter/dist/styles/prism";
 
@@ -23,7 +23,7 @@ class CodeBlock extends PureComponent {
   }
 }
 
-const Post = ({ post: { title, createdAt, content } }) => (
+const Post = ({ id, title, createdAt, content }) => (
     <Shell>
         <div className="post-content">
             <h1 className="post-title">{title}</h1>
@@ -76,6 +76,7 @@ const Post = ({ post: { title, createdAt, content } }) => (
                 color: #ffffff !important;
                 background: #f6b93b;
                 border-color: #f6b93b !important;
+                cursor: pointer;
             }
         `}</style>
     </Shell> 
@@ -83,12 +84,20 @@ const Post = ({ post: { title, createdAt, content } }) => (
 
 Post.getInitialProps = async ({ query }) => {
     const { id } = query;
-    const res = await fetch(`${process.env.SITE_URL}/posts/${id}`);
-    const post = await res.json();
+
+    const { fields, sys } = await client.getEntry({
+        id,
+    });
+
+    const { title, subtitle, content } = fields;
+    const { createdAt } = sys;
 
     return {
-        post,
-    }
+        title,
+        createdAt,
+        subtitle,
+        content,
+    };
 }
     
 export default withRouter(Post);
