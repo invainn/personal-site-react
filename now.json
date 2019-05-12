@@ -13,6 +13,7 @@
     },
     "routes": [
         { "src": "/post/(.*)", "methods": ["GET"], "dest": "/post?id=$1" },
+        { "src": "/projects/(.*)", "status": 301, "headers": { "Location": "/projects" }},
         { "src": "/(.*)", "methods": ["GET"] ,"dest": "/$1" }
     ]
 }
